@@ -1,0 +1,13 @@
+import { readFileSync, existsSync } from 'node:fs';
+import assert from 'node:assert/strict';
+import { createSSRApp, h } from 'vue';
+import { renderToString } from 'vue/server-renderer';
+import * as ui from '../dist/index.js';
+assert.equal(Object.keys(ui).length, 9);
+const html = await renderToString(createSSRApp({ render: () => h(ui.ArAuthGate, { appName: 'Calque', description: 'Package smoke test', logoSrc: '/logo.svg', signInHref: '/api/auth/github' }) }));
+assert(html.includes('href="/api/auth/github"'));
+const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+assert(existsSync(new URL(`../${pkg.types}`, import.meta.url)));
+assert(existsSync(new URL('../dist/style.css', import.meta.url)));
+assert(!readFileSync(new URL('../dist/style.css', import.meta.url), 'utf8').includes('--ar-base:'), 'Do not duplicate the design system');
+console.log('Package smoke passed: nine exports, SSR, declarations and additive CSS.');
