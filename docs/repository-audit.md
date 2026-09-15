@@ -39,6 +39,10 @@ Relevé local du 15 septembre 2026. Les constats portent sur les fichiers prése
 
 **Modale native.** `<dialog>.showModal()` gère la couche modale, l’inertie du fond et la navigation du focus. UI ajoute les labels, l’API contrôlée et le retour du focus. Le navigateur est testé réellement, y compris pour les modales imbriquées. La modale est fermée dans le HTML SSR et s’ouvre après montage si demandé.
 
+## Topbar livrée
+
+`ArTopbar` reprend les usages de Calque (fichier courant, import/export), Jalon et YouShallNotPass (liens de navigation, compte), Cadran (recherche, compte) et la nécessité d’envelopper observée dans Console. Elle conserve la classe `.topbar` du design system et ajoute des régions nommées. Les applications gardent le thème, la recherche, les autorisations et la déconnexion. Les trois variantes Vue sont visibles dans la galerie ; les applications ne sont pas encore migrées.
+
 ## Migration proposée
 
 1. **Calque :** remplacer le login par ArAuthGate, supprimer son correctif de marque/bouton, comparer nuit/jour/mobile ; conserver les routes auth.
@@ -54,7 +58,6 @@ Relevé local du 15 septembre 2026. Les constats portent sur les fichiers prése
 | Select, textarea, checkbox | Formulaires Jalon et Cadran ; labellisation cohérente |
 | Toast | Déjà présent dans Cadran/Studio ; besoin de confirmations dans Calque/Jalon |
 | Pagination et état vide | TablePager Jalon, listes de revues et de contenus |
-| Topbar composée | Marque / actions / compte partagés ; navigation propre à chaque produit |
 | Carte de métrique | Cadran/Studio ; valider l’usage dans un autre dashboard |
 | Tests de référence visuelle | Après validation des captures initiales sur un environnement CI fixe |
 

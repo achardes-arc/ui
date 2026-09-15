@@ -66,3 +66,36 @@ for (const width of [390, 1440]) {
     expect(failures).toEqual([]);
   });
 }
+
+for (const width of [390, 1440]) {
+  test(`topbar compositions stay usable at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto('/#topbar');
+    const stage = page.getByTestId('topbar-stage');
+    const bar = stage.locator('header');
+    await expect(bar).toHaveCSS('position', 'static');
+    for (const theme of ['night', 'day']) {
+      if (theme === 'day') await page.getByRole('button', { name: 'Switch to light' }).click();
+      for (const product of ['Calque', 'Jalon', 'Cadran']) {
+        await page.getByLabel('Topbar example').selectOption(product);
+        await expect(bar.getByRole('link', { name: `${product}, home`, exact: true })).toBeVisible();
+        if (product === 'Calque') {
+          await bar.getByRole('button', { name: 'Import .fig' }).click();
+          await expect(stage.getByRole('status')).toContainText('Import requested');
+        } else if (product === 'Jalon') {
+          await expect(bar.getByRole('navigation', { name: 'Example navigation' }).locator('[aria-current="page"]')).toContainText('Board');
+        } else {
+          await bar.getByRole('searchbox', { name: 'Search projects' }).fill('Calque');
+          await bar.getByRole('searchbox', { name: 'Search projects' }).press('Enter');
+          await expect(stage.getByRole('status')).toContainText('Search requested: Calque');
+        }
+        await bar.getByRole('button', { name: 'Sign out' }).focus();
+        await page.keyboard.press('Enter');
+        await expect(stage.getByRole('status')).toContainText('Sign-out requested');
+        expect(await bar.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+        await stage.screenshot({ path: `test-results/topbar-${product}-${theme}-${width}.png` });
+      }
+    }
+  });
+}

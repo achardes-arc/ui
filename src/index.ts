@@ -7,4 +7,5 @@ export { default as ArProgress } from './components/ArProgress.vue';
 export { default as ArSpinner } from './components/ArSpinner.vue';
 export { default as ArAuthGate } from './components/ArAuthGate.vue';
 export { default as ArDialog } from './components/ArDialog.vue';
-export type { ButtonVariant, StatusTone } from './types';
+export { default as ArTopbar } from './components/ArTopbar.vue';
+export type { ButtonVariant, StatusTone, TopbarItem } from './types';

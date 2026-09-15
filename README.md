@@ -18,15 +18,16 @@ pnpm exec playwright install chromium
 pnpm test:browser              # clavier, dialogues, responsive, thèmes
 ```
 
-La galerie utilise les vrais composants, avec les variantes Calque, Jalon et YouShallNotPass. Elle comprend aussi un exemple de slot pour un fournisseur de connexion externe. Les actions sont des démonstrations locales ; aucun SDK d’authentification n’est chargé.
+La galerie utilise les vrais composants, avec les variantes Calque, Jalon et YouShallNotPass. La topbar existe en variantes Calque (fichier et actions), Jalon (navigation) et Cadran (recherche et compte), et équipe la galerie elle-même. Elle comprend aussi un exemple de slot pour un fournisseur de connexion externe. Les actions sont des démonstrations locales ; aucun SDK d’authentification n’est chargé.
 
-Les tests navigateur produisent des captures des cartes d’authentification dans `test-results/`. Ce sont des artefacts de revue visuelle, pas encore des tests de comparaison avec une image de référence approuvée.
+Les tests navigateur produisent des captures des cartes d’authentification et des topbars dans `test-results/`. Ce sont des artefacts de revue visuelle, pas encore des tests de comparaison avec une image de référence approuvée.
 
 ## Contenu de cette version
 
 | Composant | Responsabilité |
 |---|---|
 | `ArAuthGate` | Carte de connexion, identité, message, action GitHub facultative, slot fournisseur, erreur |
+| `ArTopbar` | Barre haute composée : marque, navigation, contexte, actions et compte ; mise en page adaptable |
 | `ArBrand` | Logo fourni par l’application, nom, slogan, variantes en ligne / empilée |
 | `ArButton` | Bouton ou lien, variantes sémantiques, taille, chargement, désactivation |
 | `ArDialog` | Modale native, titre accessible, contenu, actions, fermeture et retour du focus |

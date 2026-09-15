@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createSSRApp, h } from 'vue';
 import { renderToString } from 'vue/server-renderer';
-import { ArButton, ArTextField, ArAuthGate, ArBanner, ArProgress, ArDialog } from '../../src';
+import { ArButton, ArTextField, ArAuthGate, ArBanner, ArProgress, ArDialog, ArTopbar } from '../../src';
 
 describe('actions', () => {
   it('defaults to a non-submitting button and forwards enabled clicks', async () => {
@@ -82,5 +82,39 @@ describe('SSR contract', () => {
     expect(ids).toHaveLength(2);
     expect(new Set(ids).size).toBe(2);
     expect(first).not.toContain('<dialog open');
+  });
+});
+
+describe('topbar composition', () => {
+  it('renders named navigation, current page and zero counts', () => {
+    const bar = mount(ArTopbar, { props: {
+      logoSrc: '/logo-small.svg', appName: 'Jalon', homeHref: '/', homeLabel: 'Jalon home',
+      navigationLabel: 'Projects', items: [{ label: 'Board', href: '/board', current: true, count: 0 }, { label: 'Reviews', href: '/reviews' }],
+    } });
+    expect(bar.get('header').classes()).toContain('topbar');
+    expect(bar.get('a[aria-label="Jalon home"]').attributes('href')).toBe('/');
+    expect(bar.get('nav').attributes('aria-label')).toBe('Projects');
+    expect(bar.get('a[href="/board"]').attributes('aria-current')).toBe('page');
+    expect(bar.get('a[href="/board"] .n').text()).toBe('0');
+    expect(bar.get('a[href="/reviews"]').attributes('aria-current')).toBeUndefined();
+  });
+  it('supports router-aware slots and omits unused regions', () => {
+    const empty = mount(ArTopbar);
+    expect(empty.find('nav').exists()).toBe(false);
+    expect(empty.find('.ar-topbar__end').exists()).toBe(false);
+    expect(empty.find('.ar-topbar__brand').exists()).toBe(false);
+    const bar = mount(ArTopbar, {
+      props: { sticky: false, items: [{ label: 'Unused fallback', href: '/fallback' }] },
+      slots: { brand: '<a href="/custom">Custom brand</a>', navigation: '<a href="/custom/board">Custom route</a>', context: 'Current file', actions: '<button>Import</button>', account: '<button>Sign out</button>' },
+    });
+    expect(bar.find('a[href="/fallback"]').exists()).toBe(false);
+    expect(bar.get('.ar-topbar__brand').text()).toBe('Custom brand');
+    expect(bar.get('.ar-topbar__context').text()).toBe('Current file');
+    expect(bar.classes()).toContain('ar-topbar--static');
+  });
+  it('renders its navigation on the server without a browser or router', async () => {
+    const html = await renderToString(createSSRApp({ render: () => h(ArTopbar, { appName: 'Calque', logoSrc: '/logo.svg', items: [{ label: 'Overview', href: '/', current: true }] }) }));
+    expect(html).toContain('aria-current="page"');
+    expect(html).toContain('Calque');
   });
 });

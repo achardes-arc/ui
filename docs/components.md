@@ -62,3 +62,33 @@ Badge : `tone` = neutral, success, warning, danger, primary, brand. Pas de rôle
 Progress : `label` requis ; `value` facultatif, `max=100`. Valeur bornée entre 0 et max ; max invalide revient à 100, valeur absente ou non finie donne une progression indéterminée. Élément HTML progress natif.
 
 Spinner : `label=Loading`, traduisible ; le texte est accessible et le dessin est décoratif. L’animation et sa réduction viennent du design system.
+
+## ArTopbar
+
+Barre haute sémantique (`header`), basée sur `.topbar` du design system. `sticky=true` par défaut ; `sticky=false` pour une barre dans un panneau ou une démonstration. Sa hauteur minimale est de 58 px ; elle grandit lorsque son contenu passe à la ligne. Les actions ne sont pas masquées sur petit écran.
+
+Props de marque : `logoSrc` (petit logo), `brandName` (Arcadran), `appName` (sous-titre), `homeHref` (lien facultatif), `homeLabel` (Home, à traduire). Sans logo ni slot brand, aucune région de marque n’est rendue.
+
+Navigation simple : `items` contient des `{ label, href, current?, count? }`. `current=true` ajoute `aria-current="page"` et le style actif. L’application décide de la page courante ; un seul élément devrait être courant. `navigationLabel` nomme le repère de navigation (Main navigation par défaut). Les liens natifs sont rendus côté serveur sans router.
+
+Slots :
+
+- `brand` : remplace entièrement la marque, par exemple avec un NuxtLink.
+- `navigation` : remplace les liens par défaut, dans le nav nommé. Utiliser des NuxtLink avec les classes `chip`, `on` et `aria-current` appropriées ; ne pas ajouter un deuxième nav.
+- `context` : fichier, recherche, statut ou sélection de projet.
+- `actions` : boutons d’action fournis par l’application.
+- `account` : identité et actions de compte.
+
+```vue
+<ArTopbar app-name="Calque" logo-src="/logo-small.svg"
+  home-href="/" home-label="Calque, accueil">
+  <template #context>{{ filename }}</template>
+  <template #actions>
+    <ArButton size="sm" @click="exportFile">Export JSON</ArButton>
+    <ArButton size="sm" variant="primary" @click="importFile">Import .fig</ArButton>
+  </template>
+  <template #account><ArButton size="sm" @click="signOut">Sign out</ArButton></template>
+</ArTopbar>
+```
+
+Aucun appel réseau, store d’authentification ou changement de thème automatique. Les slots reçoivent les contrôles de l’application, avec leurs labels accessibles. Éviter les largeurs fixes ou contenus non sécables dans les slots. Un menu déroulant de compte, un tiroir mobile et les onglets de panneau (`role=tablist`) sont des composants distincts ; `ArTopbar` fournit ici une navigation par liens.
