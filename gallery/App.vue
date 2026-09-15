@@ -46,7 +46,7 @@ const descriptions: Record<string, string> = {
               <template v-if="topbarProduct === 'Calque'"><ArButton size="sm" @click="topbarFeedback = 'Export requested. This is a local example.'">Export JSON</ArButton><ArButton size="sm" variant="primary" @click="topbarFeedback = 'Import requested. This is a local example.'">Import .fig</ArButton></template>
               <ArBadge v-else-if="topbarProduct === 'Jalon'" tone="success">Live</ArBadge>
             </template>
-            <template #account><span v-if="topbarProduct === 'Cadran'" class="gallery-topbar-user">designer@arcadran.com</span><ArButton size="sm" @click="topbarFeedback = 'Sign-out requested. Your session has not changed.'">Sign out</ArButton></template>
+            <template #account><span v-if="topbarProduct === 'Cadran'" class="gallery-topbar-user">designer@arcadran.com</span><ArButton size="sm" aria-label="Sign out" title="Sign out" @click="topbarFeedback = 'Sign-out requested. Your session has not changed.'"><template #icon><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><path d="M10 4H4v16h6M10 12h11m-4-4 4 4-4 4" /></svg></template></ArButton></template>
           </ArTopbar>
           <div class="gallery-topbar-content"><span class="mlab">{{ topbarProduct }} WORKSPACE</span><p role="status">{{ topbarFeedback || 'Application content starts here.' }}</p></div>
         </div>

@@ -87,7 +87,11 @@ Slots :
     <ArButton size="sm" @click="exportFile">Export JSON</ArButton>
     <ArButton size="sm" variant="primary" @click="importFile">Import .fig</ArButton>
   </template>
-  <template #account><ArButton size="sm" @click="signOut">Sign out</ArButton></template>
+  <template #account>
+    <ArButton size="sm" aria-label="Sign out" title="Sign out" @click="signOut">
+      <template #icon><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true" focusable="false"><path d="M10 4H4v16h6M10 12h11m-4-4 4 4-4 4" /></svg></template>
+    </ArButton>
+  </template>
 </ArTopbar>
 ```
 
