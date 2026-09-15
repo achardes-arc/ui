@@ -53,3 +53,28 @@
 .ar-topbar__context { min-width: 0; max-width: 100%; flex: 1 1 12rem; overflow-wrap: anywhere; }
 .ar-topbar__end { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; min-width: 0; max-width: 100%; margin-left: auto; }
 .ar-topbar__actions, .ar-topbar__account { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+
+/* Content vocabulary extracted from www: section headings, practice cards,
+   and the legal page's facts. Layout outside each component stays with the app. */
+.ar-section-heading { display: grid; gap: 14px; min-width: 0; }
+.ar-section-heading__kicker { margin: 0; font-size: 12px; }
+.ar-section-heading__title { margin: 0; font: 700 28px/1.2 'Chakra Petch', sans-serif; text-transform: uppercase; letter-spacing: .02em; color: var(--ar-text); overflow-wrap: anywhere; }
+.ar-section-heading__description { margin: 0; max-width: 62ch; font-size: 16px; line-height: 1.7; color: var(--ar-text-2); overflow-wrap: anywhere; }
+.ar-content-card { min-width: 0; padding: 24px; border-top: 2px solid var(--ar-primary); display: flex; flex-direction: column; gap: 20px; }
+.ar-content-card--brand { border-top-color: var(--ar-secondary); }
+.ar-content-card__header { display: flex; align-items: center; gap: 14px; }
+.ar-content-card__heading { min-width: 0; }
+.ar-content-card__icon { display: inline-flex; flex: none; color: var(--ar-primary-hi); }
+.ar-content-card--brand .ar-content-card__icon { color: var(--ar-secondary); }
+.ar-content-card__kicker { font: 12px/1.5 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--ar-text-3); overflow-wrap: anywhere; }
+.ar-content-card__title { margin: 4px 0 0; font: 700 21px/1.2 'Chakra Petch', sans-serif; text-transform: uppercase; letter-spacing: .03em; color: var(--ar-text); overflow-wrap: anywhere; }
+.ar-content-card__description { margin: 0; font-size: 16px; line-height: 1.7; color: var(--ar-text-2); overflow-wrap: anywhere; }
+.ar-content-card__body { margin-top: auto; border-top: 1px solid var(--ar-line); padding-top: 20px; min-width: 0; }
+.ar-content-card__footer { display: flex; flex-wrap: wrap; gap: 12px; min-width: 0; }
+.ar-description-list { margin: 0; min-width: 0; }
+.ar-description-list__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--ar-line); }
+.ar-description-list__term { min-width: 0; font: 11px/1.6 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .06em; color: var(--ar-text-2); overflow-wrap: anywhere; }
+.ar-description-list__value { min-width: 0; margin: 0; color: var(--ar-text); font-size: 14px; line-height: 1.6; white-space: pre-line; overflow-wrap: anywhere; }
+.ar-description-list__value a { color: var(--ar-primary-hi); text-underline-offset: 4px; }
+.ar-description-list__value a:focus-visible { outline: 2px solid var(--ar-primary-hi); outline-offset: 3px; }
+@media (max-width: 540px) { .ar-description-list__row { grid-template-columns: 1fr; gap: 4px; } .ar-content-card { padding: 20px; } }

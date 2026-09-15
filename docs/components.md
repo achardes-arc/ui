@@ -98,3 +98,44 @@ Slots :
 Aucun appel réseau, store d’authentification ou changement de thème automatique. Les slots reçoivent les contrôles de l’application, avec leurs labels accessibles. Éviter les largeurs fixes ou contenus non sécables dans les slots. Un menu déroulant de compte, un tiroir mobile et les onglets de panneau (`role=tablist`) sont des composants distincts ; `ArTopbar` fournit ici une navigation par liens.
 
 Dans les exemples de topbar, le bouton de thème présente un soleil en mode nuit (action : passer au jour), et une lune en mode jour (action : passer à la nuit). Son `aria-label` et son `title` décrivent la destination. Il utilise le slot `icon` de `ArButton` ; l’application contrôle le thème.
+
+## ArSectionHeading
+
+Extrait des introductions de section de www. `title` requis ; `kicker`, `description` facultatifs ; `level` (2 à 6, défaut 2) choisit le titre HTML. `titleId` permet de relier une section par `aria-labelledby`. Le composant ne crée pas une section englobante ni de grille de page.
+
+```vue
+<section aria-labelledby="expertise-title">
+  <ArSectionHeading title-id="expertise-title" kicker="/ What we do"
+    title="Software engineering" description="From the device to the web." />
+  <!-- contenu de la section -->
+</section>
+```
+
+## ArContentCard
+
+Carte de contenu basée sur `.card`, issue des cartes de pratiques de www. `title` requis ; `kicker`, `description` facultatifs. `accent` vaut primary (vert, défaut) ou brand (or). `level` choisit le titre HTML (2 à 6, défaut 3) pour suivre le plan du document.
+
+Rend un `article` nommé par son titre avec un ID stable en SSR. Le slot `icon` est décoratif ; ne pas y placer de contrôle interactif. Le slot principal reçoit les détails, le slot `footer` les liens ou actions. La carte entière n’est pas un faux bouton : les liens restent des liens natifs. Les composants n’imposent pas les sous-rubriques, leur nombre ou une grille de colonnes.
+
+```vue
+<ArContentCard kicker="In the product" title="Applied AI" accent="brand"
+  description="Integrate AI into your product.">
+  <p>Content and workflows supplied by the application.</p>
+  <template #footer><ArButton href="/expertise/ai">Read more</ArButton></template>
+</ArContentCard>
+```
+
+## ArDescriptionList
+
+`items` requis : liste de `{ term: string, description: string }`. Chaque entrée donne un couple `dt`/`dd` dans un `dl`. Le composant est absent si la liste est vide. Les termes et descriptions sont échappés ; les sauts de ligne des valeurs sont conservés.
+
+Le slot `value` reçoit `{ item, index }` pour composer un lien ou un autre contenu. Fournir des URLs validées par l’application. Les attributs natifs (`aria-label`, `aria-labelledby`, etc.) vont au dl. La présentation devient verticale sous 540 px ; les textes longs restent sécables.
+
+```vue
+<ArDescriptionList :items="properties">
+  <template #value="{ item }">
+    <a v-if="item.term === 'Email'" :href="`mailto:${item.description}`">{{ item.description }}</a>
+    <template v-else>{{ item.description }}</template>
+  </template>
+</ArDescriptionList>
+```

@@ -7,3 +7,9 @@ export interface TopbarItem {
   current?: boolean;
   count?: number;
 }
+
+export type HeadingLevel = 2 | 3 | 4 | 5 | 6;
+export interface DescriptionItem {
+  term: string;
+  description: string;
+}

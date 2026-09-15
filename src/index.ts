@@ -8,4 +8,7 @@ export { default as ArSpinner } from './components/ArSpinner.vue';
 export { default as ArAuthGate } from './components/ArAuthGate.vue';
 export { default as ArDialog } from './components/ArDialog.vue';
 export { default as ArTopbar } from './components/ArTopbar.vue';
-export type { ButtonVariant, StatusTone, TopbarItem } from './types';
+export type { ButtonVariant, StatusTone, TopbarItem, HeadingLevel, DescriptionItem } from './types';
+export { default as ArSectionHeading } from './components/ArSectionHeading.vue';
+export { default as ArContentCard } from './components/ArContentCard.vue';
+export { default as ArDescriptionList } from './components/ArDescriptionList.vue';

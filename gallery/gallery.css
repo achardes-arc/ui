@@ -50,3 +50,13 @@ html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 .gallery-topbar-content p { font-size: 13px; margin: 12px 0 0; }
 .gallery-topbar-file { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 11px 'JetBrains Mono',monospace; color: var(--ar-text-2); }
 .gallery-topbar-user { font: 11px 'JetBrains Mono',monospace; color: var(--ar-text-2); overflow-wrap: anywhere; }
+
+.gallery-content-stage { margin-top: 24px; padding: 28px; border: 1px solid var(--ar-line); background: var(--ar-bg-2); }
+.gallery-content-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin-top: 28px; }
+.gallery-content-details { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+.gallery-content-details h5 { font: 400 12px/1.5 'JetBrains Mono',monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--ar-secondary); margin: 0 0 8px; }
+.gallery-content-details p { margin: 0; color: var(--ar-text-2); font-size: 14px; line-height: 1.7; }
+.gallery-content-facts { display: grid; gap: 24px; margin-top: 36px; }
+@media (max-width: 1100px) { .gallery-content-grid { grid-template-columns: 1fr; } }
+@media (max-width: 540px) { .gallery-content-stage { padding: 20px 16px; } .gallery-content-details { grid-template-columns: 1fr; gap: 18px; } }
+.gallery-content-details--brand h5 { color: var(--ar-primary-hi); }

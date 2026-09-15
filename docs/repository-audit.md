@@ -15,7 +15,7 @@ Relevé local du 15 septembre 2026. Les constats portent sur les fichiers prése
 | console | HTML / JS natif ; public/index.html et style.css | Connexion Google, modales config/déploiement, progrès, badges | Conserver HTML/CSS ; ne pas ajouter Vue uniquement pour UI |
 | linear | HTML / JS natif ; public/login.html, index.html | Google, connexion, tableaux, modales, progression | Consommateur du CSS ; futur adaptateur seulement si besoin confirmé |
 | invoicer | HTML / JS natif ; public/login.html et index.html | Connexion Google, champs, tableaux ; identité de l’entité émettrice | Pas de remplacement automatique des logos de facturation |
-| www | Site HTML ; index.html et legal.html | Marque, boutons, blocs éditoriaux | Garder la voie CSS et assets |
+| www | Site HTML ; index.html, legal.html, css/site.css | Titres de section, cartes vert/or, propriétés, topbar publique | Trois primitives extraites dans UI ; le site conserve HTML/CSS. Voir [audit détaillé](www-audit.md) |
 | chiro | React 19 / Vite ; components/ui, site-shell, theme-builder | Nombreuses primitives déjà présentes, identité éditoriale distincte | Pas de dépendance Vue ; réévaluer un adaptateur React si convergence décidée |
 | vault | Plugin/outils Node, dialogues natifs système | Interaction avec le coffre de secrets | Hors bibliothèque web |
 | vps | Infrastructure, templates de services et contrôles de livraison | Conventions de publication / sécurité | Référence opérationnelle ; pas de composant UI ici |

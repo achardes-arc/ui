@@ -20,7 +20,9 @@ pnpm test:browser              # clavier, dialogues, responsive, thèmes
 
 La galerie utilise les vrais composants, avec les variantes Calque, Jalon et YouShallNotPass. La topbar existe en variantes Calque (fichier et actions), Jalon (navigation) et Cadran (recherche et compte), et équipe la galerie elle-même. Elle comprend aussi un exemple de slot pour un fournisseur de connexion externe. Les actions sont des démonstrations locales ; aucun SDK d’authentification n’est chargé.
 
-Les tests navigateur produisent des captures des cartes d’authentification et des topbars dans `test-results/`. Ce sont des artefacts de revue visuelle, pas encore des tests de comparaison avec une image de référence approuvée.
+La section **Website & content** présente les composants extraits de `www` ; [l’audit détaillé](docs/www-audit.md) indique leur provenance et les éléments conservés dans le site.
+
+Les tests navigateur produisent des captures des cartes d’authentification, des topbars et des composants de contenu dans `test-results/`. Ce sont des artefacts de revue visuelle, pas encore des tests de comparaison avec une image de référence approuvée.
 
 ## Contenu de cette version
 
@@ -36,6 +38,9 @@ Les tests navigateur produisent des captures des cartes d’authentification et 
 | `ArBanner` | Information, alerte ou erreur, annonce accessible facultative |
 | `ArProgress` | Progression native nommée, bornée ou indéterminée |
 | `ArSpinner` | Chargement avec libellé accessible |
+| `ArSectionHeading` | Surtitre, titre et introduction d’une section |
+| `ArContentCard` | Carte éditoriale avec accent vert/or, contenu et actions |
+| `ArDescriptionList` | Propriétés sémantiques terme/valeur, texte ou valeurs composées |
 
 API détaillée : [docs/components.md](docs/components.md). Inventaire et priorités : [docs/repository-audit.md](docs/repository-audit.md).
 

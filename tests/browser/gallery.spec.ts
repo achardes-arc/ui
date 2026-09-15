@@ -104,3 +104,25 @@ for (const width of [390, 1440]) {
     }
   });
 }
+
+for (const width of [390, 1440]) {
+  test(`website content stays readable at ${width}px in both themes`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1100 });
+    await page.goto('/#content');
+    const stage = page.getByTestId('content-stage');
+    for (const theme of ['night', 'day']) {
+      if (theme === 'day') await page.getByRole('banner').getByRole('button', { name: 'Switch to light' }).click();
+      await expect(stage.getByRole('heading', { name: 'Software engineering', level: 3 })).toBeVisible();
+      await expect(stage.getByRole('article', { name: 'Embedded & mobile' })).toBeVisible();
+      await expect(stage.getByRole('article', { name: 'Applied AI' })).toBeVisible();
+      expect(await stage.evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+      const link = stage.getByRole('link', { name: 'Component documentation' });
+      await link.focus();
+      await expect(link).toBeFocused();
+      await stage.screenshot({ path: `test-results/content-${theme}-${width}.png`, style: '#app > .ar-topbar { visibility: hidden; }' });
+      await link.press('Enter');
+      await expect(page).toHaveURL(/#topbar$/);
+    }
+  });
+}

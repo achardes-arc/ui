@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createSSRApp, h } from 'vue';
 import { renderToString } from 'vue/server-renderer';
-import { ArButton, ArTextField, ArAuthGate, ArBanner, ArProgress, ArDialog, ArTopbar } from '../../src';
+import { ArButton, ArTextField, ArAuthGate, ArBanner, ArProgress, ArDialog, ArTopbar, ArSectionHeading, ArContentCard, ArDescriptionList } from '../../src';
 
 describe('actions', () => {
   it('defaults to a non-submitting button and forwards enabled clicks', async () => {
@@ -116,5 +116,38 @@ describe('topbar composition', () => {
     const html = await renderToString(createSSRApp({ render: () => h(ArTopbar, { appName: 'Calque', logoSrc: '/logo.svg', items: [{ label: 'Overview', href: '/', current: true }] }) }));
     expect(html).toContain('aria-current="page"');
     expect(html).toContain('Calque');
+  });
+});
+
+describe('website content primitives', () => {
+  it('respects the surrounding heading hierarchy and escapes editorial text', () => {
+    const heading = mount(ArSectionHeading, { props: { title: '<script>Example</script>', level: 3, titleId: 'expertise', kicker: 'What we do' } });
+    expect(heading.get('h3').attributes('id')).toBe('expertise');
+    expect(heading.get('h3').text()).toBe('<script>Example</script>');
+    expect(heading.find('script').exists()).toBe(false);
+    expect(heading.find('p').exists()).toBe(false);
+  });
+  it('keeps multiple SSR card labels distinct and preserves actions as real links', async () => {
+    const html = await renderToString(createSSRApp({ render: () => h('section', [
+      h(ArContentCard, { title: 'First', level: 4 }, { footer: () => h('a', { href: '/details' }, 'Read more') }),
+      h(ArContentCard, { title: 'Second', accent: 'brand', level: 4 }),
+    ]) }));
+    const labels = [...html.matchAll(/aria-labelledby="([^"]+)"/g)].map((match) => match[1]);
+    expect(new Set(labels).size).toBe(2);
+    for (const label of labels) expect(html).toContain(`id="${label}"`);
+    expect(html).toContain('href="/details"');
+    expect(html.match(/<h4 /g)).toHaveLength(2);
+  });
+  it('uses definition-list semantics and allows structured values without raw HTML', () => {
+    const list = mount(ArDescriptionList, {
+      props: { items: [{ term: 'Email', description: 'person@example.com' }, { term: 'Note', description: '<img src=x>' }] },
+      slots: { value: ({ item }) => item.term === 'Email' ? h('a', { href: `mailto:${item.description}` }, item.description) : item.description },
+    });
+    expect(list.element.tagName).toBe('DL');
+    expect(list.findAll('dt').map((term) => term.text())).toEqual(['Email', 'Note']);
+    expect(list.findAll('dd')).toHaveLength(2);
+    expect(list.get('a').attributes('href')).toBe('mailto:person@example.com');
+    expect(list.find('img').exists()).toBe(false);
+    expect(mount(ArDescriptionList, { props: { items: [] } }).find('dl').exists()).toBe(false);
   });
 });
