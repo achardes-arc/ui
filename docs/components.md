@@ -96,3 +96,5 @@ Slots :
 ```
 
 Aucun appel réseau, store d’authentification ou changement de thème automatique. Les slots reçoivent les contrôles de l’application, avec leurs labels accessibles. Éviter les largeurs fixes ou contenus non sécables dans les slots. Un menu déroulant de compte, un tiroir mobile et les onglets de panneau (`role=tablist`) sont des composants distincts ; `ArTopbar` fournit ici une navigation par liens.
+
+Dans les exemples de topbar, le bouton de thème présente un soleil en mode nuit (action : passer au jour), et une lune en mode jour (action : passer à la nuit). Son `aria-label` et son `title` décrivent la destination. Il utilise le slot `icon` de `ArButton` ; l’application contrôle le thème.

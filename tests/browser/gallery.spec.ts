@@ -58,7 +58,7 @@ for (const width of [390, 1440]) {
     await page.goto('/');
     await page.evaluate(() => document.fonts.ready);
     for (const theme of ['night', 'day']) {
-      if (theme === 'day') await page.getByRole('button', { name: 'Switch to light' }).click();
+      if (theme === 'day') await page.getByRole('banner').getByRole('button', { name: 'Switch to light' }).click();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
       await expect(page.getByTestId('auth-stage').getByRole('link')).toHaveCSS('border-radius', '0px');
       await page.getByTestId('auth-stage').screenshot({ path: `test-results/auth-${theme}-${width}.png` });
@@ -75,11 +75,16 @@ for (const width of [390, 1440]) {
     const bar = stage.locator('header');
     await expect(bar).toHaveCSS('position', 'static');
     for (const theme of ['night', 'day']) {
-      if (theme === 'day') await page.getByRole('button', { name: 'Switch to light' }).click();
+      if (theme === 'day') await page.getByRole('banner').getByRole('button', { name: 'Switch to light' }).click();
       for (const product of ['Calque', 'Jalon', 'Cadran']) {
         await page.getByLabel('Topbar example').selectOption(product);
         await expect(bar.getByRole('link', { name: `${product}, home`, exact: true })).toBeVisible();
         if (product === 'Calque') {
+          const nextTheme = theme === 'night' ? 'day' : 'night';
+          await bar.getByRole('button', { name: theme === 'night' ? 'Switch to light' : 'Switch to dark' }).click();
+          await expect(page.locator('html')).toHaveAttribute('data-theme', nextTheme);
+          await bar.getByRole('button', { name: nextTheme === 'night' ? 'Switch to light' : 'Switch to dark' }).click();
+          await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
           await bar.getByRole('button', { name: 'Import .fig' }).click();
           await expect(stage.getByRole('status')).toContainText('Import requested');
         } else if (product === 'Jalon') {
