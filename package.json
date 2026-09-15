@@ -55,5 +55,9 @@
     "check:package": "node scripts/check-package.mjs",
     "check": "pnpm typecheck && pnpm check:styles && pnpm test && pnpm build && pnpm check:package && pnpm build:gallery",
     "prepack": "pnpm build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/achardes-arc/ui.git"
   }
 }

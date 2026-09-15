@@ -96,9 +96,9 @@ Une bibliothèque facilite la cohérence, mais ne peut pas empêcher une applica
 
 ## Livraison
 
-La CI fournie lance les contrôles et les tests Chromium et conserve les captures. Lors de la création du dépôt GitHub, autoriser son workflow à lire `@arcadran/design-system` dans les paramètres du package branding. Aucune publication automatique n’est activée.
+La CI fournie lance les contrôles et les tests Chromium et conserve les captures. Pour le dépôt [achardes-arc/ui](https://github.com/achardes-arc/ui), autoriser son workflow à lire `@arcadran/design-system` dans les paramètres du package branding. Aucune publication automatique n’est activée.
 
-Avant une première publication : relire la galerie avec les deux applications pilotes, réserver le package privé `@arcadran/ui`, ajouter les métadonnées du dépôt réel et configurer la publication. Épingler les versions chez les consommateurs et proposer les mises à jour par PR. Ne pas déclencher une mise à niveau non vérifiée sur tout le parc.
+Avant une première publication : relire la galerie avec les deux applications pilotes, réserver le package privé `@arcadran/ui`, configurer la publication. Épingler les versions chez les consommateurs et proposer les mises à jour par PR. Ne pas déclencher une mise à niveau non vérifiée sur tout le parc.
 
 ## Sources techniques
 
